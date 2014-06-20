@@ -51,7 +51,7 @@ Blocks are expressed as:
 <!-- endbuild -->
 ```
 
-* **type**: either `js` or `css`
+* **type**: either `js`, `css` or `coffee`
  * If another type, the block will be ignored.  Useful for "development only" blocks that won't appear in your build
 * **alternate search path**: (optional) By default the input files are relative to the treated file. Alternate search path allows one to change that
 * **path**: the file path of the optimized file, the target output
@@ -65,6 +65,13 @@ An example of this in completed form can be seen below:
 <script src="js/models/thing-model.js"></script>
 <script src="js/views/thing-view.js"></script>
 <!-- endbuild -->
+
+<!-- build:coffee js/app.js -->
+<script src="js/app.js"></script>
+<script src="js/controllers/thing-controller.js"></script>
+<script src="js/models/thing-model.js"></script>
+<script src="js/views/thing-view.js"></script>
+<!-- endbuild -->
 ```
 
 ### Transformation flow
@@ -73,6 +80,8 @@ The transformation flow is made of sequential steps: each of the steps transform
 
 By default the flow is: `concat -> uglifyjs`.
 Additionally to the flow, at the end, some postprocessors can be launched to further alter the configuration.
+We recommend using `coffee -> uglifyjs` as workflow. Where coffee will remplace the concat. The concat doesn't have sourceMap support,
+so the coffee is the best solution.
 
 Let's have an example, using the default flow (we're just going to look at the steps), `app` for input dir, `dist` for output dir,  and the following block:
 
